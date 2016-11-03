@@ -24,7 +24,10 @@
         <%_ } _%>
 
         Authority.getAll(function(authorities){
-          vm.authorities = authorities;
+            vm.authorities = []
+            angular.forEach(authorities, function(authority){
+               vm.authorities.push(authority.name)
+            })
         })
 
         function clear () {
