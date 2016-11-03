@@ -5,12 +5,12 @@
         .module('<%=angularAppName%>')
         .controller('UserManagementDialogController',UserManagementDialogController);
 
-    UserManagementDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'User'<% if (enableTranslation) { %>, '<%=jhiPrefixCapitalized%>LanguageService'<% } %>];
+    UserManagementDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'User', 'Authority'<% if (enableTranslation) { %>, '<%=jhiPrefixCapitalized%>LanguageService'<% } %>];
 
-    function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User<% if (enableTranslation) { %>, <%=jhiPrefixCapitalized%>LanguageService<% } %>) {
+    function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User, Authority<% if (enableTranslation) { %>, <%=jhiPrefixCapitalized%>LanguageService<% } %>) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        vm.authorities = [];
         vm.clear = clear;
         vm.languages = null;
         vm.save = save;
@@ -22,6 +22,10 @@
             vm.languages = languages;
         });
         <%_ } _%>
+
+        Authority.getAll(function(authorities){
+          vm.authorities = authorities;
+        })
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
